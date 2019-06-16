@@ -1,0 +1,99 @@
+
+.rich-blue {
+    -fx-background-color:
+        linear-gradient(#1ea7ba, #31aeb2),
+        radial-gradient(center 50% -40%, radius 200%, white 0%, #31aeb2 50%);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: white;
+}
+.rich-blue:hover {
+    -fx-background-color:
+        linear-gradient(#1ea7ba, #31aeb2),
+        radial-gradient(center 50% -40%, radius 200%, white 15%, #31aeb2 50%);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: white;
+}
+.rich-blue:active {
+    -fx-background-color:
+        linear-gradient(#1ea7ba, #31aeb2),
+        radial-gradient(center 50% -40%, radius 200%, white 15%, #31aeb2 50%);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: white;
+}
+.rich-blue Text {
+    
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , 1);
+}
+
+.text-field {
+    -fx-background-color: #18ff00 , #68c49d , #68c49d;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+}
+
+.text-field:focused {
+    -fx-background-color: #18ff00 , #68c49d , #68c49d;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+    -fx-prompt-text-fill: white;
+}
+.check-box .box {
+
+-fx-background-color: transparent;
+-fx-border-color:grey;
+-fx-border-radius:3px; 
+
+}
+
+.check-box:selected .mark {
+
+-fx-background-color: white;
+
+}
+
+.check-box:selected .box {
+
+-fx-background-color: #28a3f4;
+}
+.button
+{
+-fx-background-color : #05071F;
+-fx-text-fill : #e7e5e5;
+}
+.button:hover{
+-fx-background-color : #10165F;
+}
+.button:pressed
+{
+-fx-background-color : #1620A1;
+}
+
+.scroll-pane {
+    -fx-background-color: #02030A;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #10165F;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: black;
+}

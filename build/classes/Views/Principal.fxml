@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #68c49d;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PrincipalC">
+   <children>
+      <JFXButton fx:id="Cadastrar" layoutX="33.0" layoutY="14.0" onAction="#abrirCadastro" prefHeight="120.0" prefWidth="224.0" ripplerFill="#d6d6d6" style="-fx-background-color: #fff;" text="Cadastrar Usuario" />
+      <JFXButton fx:id="Historico" layoutX="33.0" layoutY="140.0" onAction="#abrirHistorico" prefHeight="120.0" prefWidth="224.0" style="-fx-background-color: #fff;" text="Historico de Requisições" />
+      <JFXButton fx:id="Adicionar" layoutX="338.0" layoutY="227.0" onAction="#addReq" prefHeight="120.0" prefWidth="224.0" style="-fx-background-color: #fff;" text="Adicionar Requisições" />
+      <JFXButton fx:id="AlterarDados" layoutX="338.0" layoutY="50.0" onAction="#abrirAlterarDados" prefHeight="120.0" prefWidth="224.0" style="-fx-background-color: #fff;" text="Alterar Dados" />
+      <JFXButton fx:id="Listagem" layoutX="33.0" layoutY="266.0" onAction="#abrirListagem" prefHeight="120.0" prefWidth="224.0" style="-fx-background-color: #fff;" text="Listagem de Usuarios" />
+   </children>
+</AnchorPane>

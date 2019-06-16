@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="840.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuC">
+   <children>
+      <VBox layoutX="-1.0" prefHeight="480.0" prefWidth="216.0" style="-fx-background-color: #f3b397;">
+         <children>
+            <Pane prefHeight="142.0" prefWidth="279.0">
+               <children>
+                  <ImageView fitHeight="63.0" fitWidth="100.0" layoutX="21.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ceplac.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="133.0" layoutY="61.0" text="Ceplac" textFill="WHITE">
+                     <font>
+                        <Font name="SimSun" size="18.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <JFXButton fx:id="cadastrar" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="224.0" ripplerFill="WHITE" style="-fx-background-color: #f3b397;" text="Cadastrar Usuario" textFill="WHITE">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" size="20" stroke="#49c452" strokeMiterLimit="5.0" strokeWidth="0.4" />
+               </graphic></JFXButton>
+            <JFXButton fx:id="listagemUser" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="224.0" ripplerFill="WHITE" style="-fx-background-color: #f3b397;" text="Listagem de Usuarios" textFill="WHITE">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="LIST" size="20" stroke="#49c452" strokeWidth="0.4" text="" />
+               </graphic></JFXButton>
+            <JFXButton fx:id="historicoRequi" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="224.0" ripplerFill="WHITE" style="-fx-background-color: #f3b397;" text="Historico de Requisições" textFill="WHITE">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="HISTORY" size="20" stroke="#49c452" strokeWidth="0.4" />
+               </graphic></JFXButton>
+            <JFXButton fx:id="addReq" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="224.0" ripplerFill="WHITE" style="-fx-background-color: #f3b397;" text="Adicionar Requisições" textFill="WHITE">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="20" stroke="#49c452" strokeWidth="0.4" />
+               </graphic></JFXButton>
+            <JFXButton fx:id="setting" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="224.0" ripplerFill="WHITE" style="-fx-background-color: #f3b397;" text="Settings" textFill="WHITE">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="GEAR" size="20" stroke="#49c452" strokeWidth="0.4" text="" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="logout" alignment="BASELINE_LEFT" onAction="#close" prefHeight="25.0" prefWidth="224.0" ripplerFill="WHITE" style="-fx-background-color: #f3b397;" text="Sair" textFill="WHITE">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="20" stroke="#49c452" strokeWidth="0.4" />
+               </graphic>
+            </JFXButton>
+         </children>
+         <effect>
+            <DropShadow color="#ff7606" />
+         </effect>
+      </VBox>
+      <AnchorPane layoutX="216.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="480.0" prefWidth="625.0" style="-fx-background-color: #879772;">
+         <effect>
+            <DropShadow height="0.0" radius="4.75" />
+         </effect>
+         <children>
+            <ImageView fitHeight="252.0" fitWidth="539.0" layoutX="187.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/spirit.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="114.0" layoutY="55.0" text="Programa de Controle de Requisições" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="59.0" layoutY="363.0" text="Desenvolvidor por : Gabriel Costa e Felipe Malta" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #68c49d;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.listagemUserC">
+   <children>
+      <TableView fx:id="tb" layoutX="27.0" layoutY="34.0" prefHeight="290.0" prefWidth="370.0">
+        <columns>
+          <TableColumn fx:id="clmid" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="clmLogin" prefWidth="75.0" text="Login" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="deletar" layoutX="27.0" layoutY="336.0" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #fff;" text="Deletar" />
+      <JFXButton fx:id="atualizar" layoutX="163.0" layoutY="336.0" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #fff;" text="Atualizar" />
+      <JFXButton fx:id="btCancelar" layoutX="300.0" layoutY="336.0" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #fff;" text="Voltar" />
+      <JFXTextField fx:id="txPequisar" focusColor="#00ff1e" layoutX="406.0" layoutY="34.0" prefHeight="25.0" prefWidth="106.0" promptText="Digite Sua Pesquisa" unFocusColor="WHITE" />
+      <JFXButton fx:id="btBuscar" layoutX="521.0" layoutY="37.0" prefHeight="25.0" prefWidth="52.0" style="-fx-background-color: #fff;" text="Search" />
+   </children>
+</AnchorPane>
