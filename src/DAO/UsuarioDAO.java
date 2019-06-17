@@ -6,6 +6,7 @@
 package DAO;
 
 import Conexao.ConnectionFactory;
+import Model.Fachada;
 import Model.Usuario;
 import Views.AlterarDados;
 import Views.Login;
@@ -24,8 +25,16 @@ import javafx.stage.Stage;
  * @author SpiriT
  */
 public class UsuarioDAO  {
+    private static UsuarioDAO aUsuarioDAO; 
+    public static UsuarioDAO getInstancia() {
+		
+		if (aUsuarioDAO == null) {
+			aUsuarioDAO = new UsuarioDAO();
+		}
+		
+		return aUsuarioDAO;
+	}
     private Connection con;
-    
     public UsuarioDAO(){
     this.con = new ConnectionFactory().getConnection();
     }

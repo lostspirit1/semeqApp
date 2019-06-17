@@ -22,8 +22,18 @@ import java.util.logging.Logger;
  * @author SpiriT
  */
 public class RequisicaoDAO  {
-    private Connection con;
     
+    private static RequisicaoDAO aRequisicaoDAO; 
+    public static RequisicaoDAO getInstancia() {
+		
+		if (aRequisicaoDAO == null) {
+			aRequisicaoDAO = new RequisicaoDAO();
+		}
+		
+		return aRequisicaoDAO;
+	}
+    
+    private Connection con;
     public RequisicaoDAO(){
     this.con = new ConnectionFactory().getConnection();
     }
