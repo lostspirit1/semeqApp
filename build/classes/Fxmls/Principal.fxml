@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane fx:id="panePrincipal" maxHeight="550.0" maxWidth="1200.0" prefHeight="550.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PrincipalC">
+    <top>
+        <HBox alignment="CENTER" style="-fx-background-color: #eee;" BorderPane.alignment="TOP_CENTER">
+            <children>
+                <JFXButton id="btAlterar" fx:id="btAlterar" onAction="#secAlterar" prefHeight="65.0" prefWidth="121.0" styleClass="btAlterar" stylesheets="@principal.css" text="Alterar Dados">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="GEAR" size="18" />
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btReq" onAction="#secHistorico" prefHeight="65.0" prefWidth="110.0" styleClass="btReqr" stylesheets="@principal.css" text="Requisições">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="PLUS_CIRCLE" size="18" />
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btBole" onAction="#secBoletim" prefHeight="65.0" prefWidth="142.0" styleClass="btBole" stylesheets="@principal.css" text="Boletim">
+                    <graphic>
+                        <FontAwesomeIconView fx:id="e" glyphName="HISTORY" size="18" />
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btCadastro" onAction="#secCadastro" prefHeight="65.0" prefWidth="142.0" styleClass="btCadastro" stylesheets="@principal.css" text="Cadastrar Usuários">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="USER_PLUS" size="18" />
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btUser" onAction="#secUser" prefHeight="65.0" prefWidth="116.0" styleClass="btUser" stylesheets="@principal.css" text="Usuários">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="LIST" size="18" />
+                    </graphic>
+                </JFXButton>
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER" />
+    </center>
+</BorderPane>

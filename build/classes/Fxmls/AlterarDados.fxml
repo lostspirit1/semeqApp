@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import util.MaskTextField?>
+
+<BorderPane maxWidth="1000.0" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.alterarDadosC">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="500.0" prefWidth="1000.0">
+               <children>
+                  <PasswordField fx:id="txtSenha" layoutX="210.0" layoutY="176.0" prefHeight="25.0" prefWidth="165.0" />
+                  <PasswordField fx:id="txtConfirmarSenha" layoutX="210.0" layoutY="226.0" prefHeight="25.0" prefWidth="165.0" />
+                  <MaskTextField mask="NNNNNNNNNNN" fx:id="txtComputador" layoutX="675.0" layoutY="76.0" prefHeight="25.0" prefWidth="165.0" visible="false" />
+                  <MaskTextField  mask="NNNNNNNNNNN" fx:id="txtModem" layoutX="675.0" layoutY="126.0" prefHeight="25.0" prefWidth="165.0" visible="false" />
+                  <MaskTextField  mask="NNNNNNNNNNN" fx:id="txtImpressora" layoutX="675.0" layoutY="176.0" prefHeight="25.0" prefWidth="165.0" visible="false" />
+                  <MaskTextField mask="NNNNNNNNNNN" fx:id="txtMonitor" layoutX="675.0" layoutY="226.0" prefHeight="25.0" prefWidth="165.0" visible="false" />
+                  <CheckBox fx:id="cModem" layoutX="575.0" layoutY="130.0" mnemonicParsing="false" onAction="#CheckBox" />
+                  <CheckBox fx:id="cComputador" layoutX="575.0" layoutY="80.0" mnemonicParsing="false" onAction="#CheckBox" />
+                  <CheckBox fx:id="cImpressora" layoutX="575.0" layoutY="180.0" mnemonicParsing="false" onAction="#CheckBox" />
+                  <CheckBox fx:id="cMonitor" layoutX="575.0" layoutY="230.0" mnemonicParsing="false" onAction="#CheckBox" />
+                  <JFXButton layoutX="401.0" layoutY="346.0" onAction="#xd" prefHeight="25.0" prefWidth="184.0" style="-fx-background-color: #000;" text="Alterar" textFill="WHITE" />
+                  <Label fx:id="labelLogin" layoutX="210.0" layoutY="80.0" prefHeight="17.0" prefWidth="161.0" />
+                  <Label fx:id="labelNome" layoutX="210.0" layoutY="130.0" prefHeight="17.0" prefWidth="161.0" />
+                  <Label layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="43.0" text="Login:" />
+                  <Label layoutX="100.0" layoutY="180.0" prefHeight="17.0" prefWidth="80.0" text="Senha Antiga:" />
+                  <Label layoutX="100.0" layoutY="230.0" prefHeight="15.0" prefWidth="95.0" text="Confirmar Senha:" />
+                  <Label layoutX="100.0" layoutY="130.0" text="Nome" />
+                  <Label layoutX="410.0" layoutY="230.0" text="Mudar Numero Monitor:" />
+                  <Label layoutX="410.0" layoutY="80.0" prefHeight="17.0" prefWidth="165.0" text="Mudar Numero Computador:" />
+                  <Label layoutX="410.0" layoutY="130.0" text="Mudar Numero Modem:" />
+                  <Label layoutX="410.0" layoutY="180.0" prefHeight="17.0" prefWidth="147.0" text="Mudar Numero Impressora" />
+               </children>
+            </AnchorPane>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

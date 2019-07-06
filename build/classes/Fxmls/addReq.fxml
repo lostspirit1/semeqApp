@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane maxWidth="1000.0" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.addReqC">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="500.0" prefWidth="1000.0">
+               <children>
+                  <JFXComboBox fx:id="cbEquipamentos" layoutX="400.0" layoutY="321.0" prefHeight="35.0" prefWidth="170.0" />
+                  <Label layoutX="270.0" layoutY="37.0" prefHeight="17.0" prefWidth="118.0" text="Nome Da Requisicao:" />
+                  <Label layoutX="270.0" layoutY="167.0" prefHeight="17.0" prefWidth="75.0" text="Observação" />
+                  <Label layoutX="270.0" layoutY="330.0" text="Equipamento" />
+                  <JFXButton layoutX="408.0" layoutY="401.0" onAction="#xd" prefHeight="25.0" prefWidth="184.0" style="-fx-background-color: #000;" text="Cadastrar" textFill="WHITE" />
+                  <TextArea fx:id="txtObservacao" layoutX="370.0" layoutY="84.0" prefHeight="200.0" prefWidth="357.0" />
+                  <TextField fx:id="txtNomeReq" layoutX="400.0" layoutY="35.0" prefHeight="25.0" prefWidth="170.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

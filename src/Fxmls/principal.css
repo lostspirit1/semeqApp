@@ -1,0 +1,20 @@
+.btAlterar:hover{
+    -fx-border-color:#610099;
+    -fx-border-width: 0px 0px 3px 0px;
+}
+.btReqr:hover{
+    -fx-border-color:#660099;
+    -fx-border-width: 0px 0px 3px 0px;
+}
+.btBole:hover{
+    -fx-border-color:#610099;
+    -fx-border-width: 0px 0px 3px 0px;
+}
+.btCadastro:hover{
+    -fx-border-color:#660099;
+    -fx-border-width: 0px 0px 3px 0px;
+}
+.btUser:hover{
+    -fx-border-color:#660099;
+    -fx-border-width: 0px 0px 3px 0px;
+}

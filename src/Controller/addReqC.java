@@ -5,18 +5,25 @@
  */
 package Controller;
 
-import DAO.RequisicaoDAO;
+import DAO.EquipamentoDAO;
+import Model.Alerts;
+import Model.Equipamentos;
+import Model.Fachada;
 import Model.Requisicao;
 import Views.Principal;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -24,38 +31,53 @@ import javafx.scene.control.Alert.AlertType;
  * @author SpiriT
  */
 public class addReqC implements Initializable {
-    
-    @FXML
-    private JFXTextField txtNome;
 
     @FXML
-    private JFXButton btReq;
-    
+    private JFXComboBox<Equipamentos> cbEquipamentos;
+    private List<Equipamentos> equipamentos = new ArrayList();
+    private ObservableList<Equipamentos> obsEquipamentos;
     @FXML
-    void criarReq(ActionEvent event) {
-    criarReq();
+    private TextArea txtObservacao;
+    @FXML
+    private TextField txtNomeReq;
+    private Fachada aFachada;
+    @FXML
+    void xd(ActionEvent event) {
+        requisicao();
     }
-    public void criarReq() {
-    String Nome = txtNome.getText();
-     Requisicao r = new Requisicao(Nome);
-      RequisicaoDAO dao = new RequisicaoDAO();
-        if(dao.addReq(r)){
-            Alert al = new Alert(AlertType.ERROR);
-            al.setHeaderText("Usuário cadastrado");
-            al.show();
+
+    @FXML
+    void criarReq(ActionEvent event) throws SQLException {
+    }
+
+ 
+
+    public void requisicao() {
+        Alerts alerts = new Alerts();
+        String nome = txtNomeReq.getText(), observacao = txtObservacao.getText();
+        Equipamentos equipamentos = new Equipamentos();
+        Requisicao requisicao = new Requisicao(nome,observacao);
+        if(cbEquipamentos.getSelectionModel().getSelectedItem() != null ){
+             equipamentos.setId_equipamento_do_Usuario(cbEquipamentos.getSelectionModel().getSelectedItem().getId_equipamento_do_Usuario());
+             if (txtNomeReq.getText().trim().isEmpty() || txtObservacao.getText().trim().isEmpty()){
+            alerts.alertReqVazio();
+            }else if(aFachada.getInstancia().incluirRequisicao(requisicao,equipamentos)){
+            alerts.alertReqCadastrado();
+            }else{
+            alerts.alertReqNCadastrado();
+            }
         }else{
-            Alert al = new Alert(AlertType.ERROR);
-            al.setHeaderText("Usuário não cadastrado");
-            al.show();
+            alerts.selecioneEquipamento();
         }
+         
     }
-
-    public void fecha(){
-        Principal.getStage().close();
-    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+
+        EquipamentoDAO dao = new EquipamentoDAO();
+        obsEquipamentos = FXCollections.observableArrayList(dao.read());
+        cbEquipamentos.setItems(obsEquipamentos);
+    }
+
 }

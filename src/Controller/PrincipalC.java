@@ -5,22 +5,20 @@
  */
 package Controller;
 
-import Views.AlterarDados;
-import Views.Cadastrar;
-import Views.Historico;
-import Views.Login;
+import Model.Sessao;
 import Views.Principal;
-import Views.addReq;
-import Views.listagemUser;
 import com.jfoenix.controls.JFXButton;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 /**
  * FXML Controller class
@@ -28,78 +26,116 @@ import javafx.stage.Stage;
  * @author SpiriT
  */
 public class PrincipalC implements Initializable {
-    
+
+    @FXML
+    private BorderPane panePrincipal;
+    @FXML
+    private BorderPane alterarDados;
+    @FXML
+    private BorderPane requisicoes;
     @FXML
     private JFXButton Cadastrar;
-
+    @FXML
+    private JFXButton btAlterar;
     @FXML
     private JFXButton Historico;
-
     @FXML
     private JFXButton Adicionar;
-
     @FXML
     private JFXButton AlterarDados;
-
     @FXML
     private JFXButton Listagem;
+    private static Sessao aSessao;
+    @FXML
+    void secAlterar(ActionEvent event) {
+        mostrarAlterarDados();
+    }
 
     @FXML
-    void abrirCadastro(ActionEvent event) {
-    Cadastrar c = new Cadastrar();
-        fecha();
-        try {
-            c.start(new Stage());
-            } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    void secHistorico(ActionEvent event) {
+        mostrarReq();
     }
+
     @FXML
-    void abrirHistorico(ActionEvent event) {
-        Historico h = new Historico();
-        fecha();
-        try {
-            h.start(new Stage());
-            } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    void secBoletim(ActionEvent event) {
+        mostrarBoletim();
     }
+
     @FXML
-    void abrirAlterarDados(ActionEvent event) {
-        AlterarDados ad = new AlterarDados();
-        fecha();
-        try {
-            ad.start(new Stage());
-            } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    } 
+    void secCadastro(ActionEvent event) {
+        mostrarCadastro();
+    }
+
     @FXML
-    void addReq(ActionEvent event) {
-        addReq add = new addReq();
-        fecha();
-        try {
-            add.start(new Stage());
-            } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    } 
-    @FXML
-    void abrirListagem(ActionEvent event) {
-        listagemUser lu = new listagemUser();
-        fecha();
-        try {
-            lu.start(new Stage());
-            } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }      
-    public void fecha(){
+    void secUser(ActionEvent event) {
+        mostrarUser();
+    }
+
+    public void fecha() {
         Principal.getStage().close();
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+    }
+
+    private void mostrarAlterarDados() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Principal.class.getResource("/Fxmls/AlterarDados.fxml"));
+        try {
+            BorderPane alterarDados = loader.load();
+            panePrincipal.setCenter(alterarDados);
+            alterarDados.toFront();
+        } catch (IOException ex) {
+            Logger.getLogger(PrincipalC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mostrarReq() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Principal.class.getResource("/Fxmls/addReq.fxml"));
+        try {
+            BorderPane requisicoes = loader.load();
+            panePrincipal.setCenter(requisicoes);
+            requisicoes.toFront();
+        } catch (IOException ex) {
+            Logger.getLogger(PrincipalC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mostrarBoletim() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Principal.class.getResource("/Fxmls/boletim.fxml"));
+        try {
+            AnchorPane boletim = loader.load();
+            panePrincipal.setCenter(boletim);
+            boletim.toFront();
+        } catch (IOException ex) {
+            Logger.getLogger(PrincipalC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mostrarCadastro() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Principal.class.getResource("/Fxmls/Cadastrar.fxml"));
+        try {
+            BorderPane cadastro = loader.load();
+            panePrincipal.setCenter(cadastro);
+            cadastro.toFront();
+        } catch (IOException ex) {
+            Logger.getLogger(PrincipalC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mostrarUser() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Principal.class.getResource("/Fxmls/Historico.fxml"));
+        try {
+            BorderPane listaUser = loader.load();
+            panePrincipal.setCenter(listaUser);
+            listaUser.toFront();
+        } catch (IOException ex) {
+            Logger.getLogger(PrincipalC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

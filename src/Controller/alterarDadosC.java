@@ -5,15 +5,15 @@
  */
 package Controller;
 
-
-import Conexao.ConnectionFactory;
-import DAO.UsuarioDAO;
+import Model.Alerts;
+import Model.BCrypt;
+import Model.Equipamentos;
+import Model.Fachada;
+import Model.Sessao;
 import Model.Usuario;
 import Views.AlterarDados;
 import Views.Principal;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -22,10 +22,11 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+import util.MaskTextField;
 
 /**
  * FXML Controller class
@@ -33,98 +34,143 @@ import javax.swing.JOptionPane;
  * @author SpiriT
  */
 public class alterarDadosC implements Initializable {
-   
-    @FXML
-    private JFXTextField txtLogin;
+
 
     @FXML
-    private JFXPasswordField txtSenha;
+    private PasswordField txtSenha;
 
     @FXML
-    private JFXPasswordField txtConfirm;
+    private PasswordField txtConfirmarSenha;
 
     @FXML
-    private JFXButton btnAlterar;
+    private MaskTextField txtComputador;
 
+    @FXML
+    private MaskTextField txtModem;
+
+    @FXML
+    private MaskTextField txtImpressora;
+
+    @FXML
+    private MaskTextField txtMonitor;
+
+    @FXML
+    private CheckBox cModem;
+
+    @FXML
+    private CheckBox cComputador;
+
+    @FXML
+    private CheckBox cImpressora;
+
+    @FXML
+    private CheckBox cMonitor;
+
+    @FXML
+    private Label labelLogin;
+
+    @FXML
+    private Label labelNome;
     @FXML
     private JFXButton btnVoltar;
+    private Fachada aFachada;
+    private static Sessao aSessao;
 
-    public void fecha(){
+    public void fecha() {
         AlterarDados.getStage().close();
     }
-    public void abreTelaP(){
+
+    public void abreTelaP() {
         Principal p = new Principal();
         try {
             p.start(new Stage());
         } catch (Exception ex) {
             Logger.getLogger(listagemUserC.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } 
+    }
+
     @FXML
-    void xd(ActionEvent event) {
-alterarSenha();
+    void xd(ActionEvent event) throws SQLException {
+       alterarSenha2();
     }
-    
-    public void alterarSenha() {
-        try {
-            ConnectionFactory conn = new ConnectionFactory(); 
-            String sql = "SELECT id_usuario,login,senha FROM usuario where login = '" + txtLogin.getText() + "' and  senha = '" + txtSenha.getText() + "'";
-            conn.executeSQL(sql);
-
-            //Se houver resultado, ou seja, se validar o usuario e senha, faça algo.
-            if (conn.resultset.next()) {
-                System.out.println("Você pode alterar a senha.");
-                Long idU = conn.resultset.getLong("id_usuario");
-                Usuario u = new Usuario(idU);
-                String novaSenha = JOptionPane.showInputDialog("Digite sua Senha nova por favor \n");
-                String novaSenhaConfirma = JOptionPane.showInputDialog("Confirme a nova senha por favor \n");
-
-                if (novaSenha.equals(novaSenhaConfirma)) {
-                    String update = "UPDATE usuario SET senha='" + novaSenha + "' WHERE id_usuario = " + idU + "";
-                    conn.statement.executeUpdate(update);
-                    JOptionPane.showMessageDialog(null, "Senha alterada com sucesso...");
-                } else {
-                    JOptionPane.showMessageDialog(null, "As duas senhas digitadas não são a mesma, tente novamente por favor");
-                }
-            } else {
-                System.out.println("Acesso negado.");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro: \n" + e.getMessage());
+    @FXML
+    public void CheckBox(ActionEvent event){
+        if (cModem.isSelected()) {
+            txtModem.setVisible(true);
+        }else{
+           txtModem.setVisible(false);  
+        }  
+        if (cComputador.isSelected()) {
+            txtComputador.setVisible(true);
+        }else{
+           txtComputador.setVisible(false);  
+        }
+        if (cImpressora.isSelected()) {
+            txtImpressora.setVisible(true);
+        }else{
+           txtImpressora.setVisible(false);  
+        }
+        if (cMonitor.isSelected()) {
+            txtMonitor.setVisible(true);
+        }else{
+           txtMonitor.setVisible(false);  
         }
     }
-    
-    public void atualizar(){
-        UsuarioDAO dao = new UsuarioDAO();
-        String login = txtLogin.getText();
-        String senha = txtSenha.getText();
-        String confSenha = txtConfirm.getText();
-        
-        if(senha.equals(confSenha)){
-        Usuario u = new Usuario(login,senha);
-        if(dao.update(u)){
-        Alert al = new Alert(Alert.AlertType.CONFIRMATION);
-        al.setHeaderText("Senha Alterada");
-        al.show();
-        }else{
-        Alert al = new Alert(Alert.AlertType.CONFIRMATION);
-        al.setHeaderText("Senha não Alterada");
-        al.show();
+
+    public void alterarSenha2() throws SQLException {
+        Alerts alerts = new Alerts();
+        String senha = txtSenha.getText(),confirmSenha=txtConfirmarSenha.getText(),computador = txtComputador.getText(),modem = txtModem.getText(), impressora=txtImpressora.getText(), monitor=txtMonitor.getText();
+        String geradoNovaSenha = BCrypt.gensalt();
+        String senhaCrypt = BCrypt.hashpw(confirmSenha, geradoNovaSenha);
+        String senhaAntiga = Sessao.getInstancia().getUsuario().getSenha();
+        if (txtSenha.getText().trim().isEmpty() || txtConfirmarSenha.getText().trim().isEmpty()){
+            alerts.alertCadastroVazio();
+        }else if (BCrypt.checkpw(senha, senhaAntiga)){
+        Usuario usuario = new Usuario();
+        Equipamentos equipamentos = new Equipamentos();
+        if (txtSenha.getText().trim().isEmpty()) {
+         usuario.setSenha(aSessao.getInstancia().getUsuario().getSenha());   
         }
-        }else{
-         Alert al = new Alert(Alert.AlertType.CONFIRMATION);
-        al.setHeaderText("Senhas não são iguais");
-        al.show();
+        else{
+         usuario.setSenha(senha);
         }
-    } 
-    
+        if (txtConfirmarSenha.getText().trim().isEmpty()) {
+         usuario.setNovaSenha(aSessao.getInstancia().getUsuario().getSenha());   
+        }
+        else{
+         usuario.setNovaSenha(senhaCrypt);
+        }
+        if (txtComputador.getText().trim().isEmpty()) {
+        equipamentos.setSerial_computador(aSessao.getInstancia().getEquipamentos().getSerial_computador());   
+        }else{
+        equipamentos.setSerial_computador(computador);
+        }
+        if (txtModem.getText().trim().isEmpty()) {
+        equipamentos.setSerial_modem(aSessao.getInstancia().getEquipamentos().getSerial_modem());   
+        }else{
+        equipamentos.setSerial_modem(modem);
+        }
+        if (txtImpressora.getText().trim().isEmpty()) {
+        equipamentos.setSerial_impressora(aSessao.getInstancia().getEquipamentos().getSerial_impressora());   
+        }else{
+        equipamentos.setSerial_impressora(impressora);
+        }      
+        if (txtMonitor.getText().trim().isEmpty()) {
+        equipamentos.setSerial_monitor(aSessao.getInstancia().getEquipamentos().getSerial_monitor());   
+        }else{
+        equipamentos.setSerial_monitor(monitor);
+        } 
+        aFachada.getInstancia().validarSenhaUsuario2(usuario,equipamentos);
+            alerts.alertMudarSucesso();    
+        }else{
+             alerts.alertSenhaAnteriorFail();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        btnVoltar.setOnMouseClicked ((MouseEvent e)->{
-            abreTelaP();
-            fecha();
-            System.out.println("a");
-        });
-    }    
-    
+        labelNome.setText(aSessao.getInstancia().getUsuario().getNome());
+        labelLogin.setText(aSessao.getInstancia().getUsuario().getLogin());
+    }
+
 }

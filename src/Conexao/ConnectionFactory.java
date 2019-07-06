@@ -11,32 +11,36 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ConnectionFactory {
-        public Statement statement;
-        public ResultSet resultset;
 
-    	public Connection getConnection() {
-        String url = "jdbc:mysql://localhost:3306/helpSemeq"+"?verifyServerCertificate=false&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=America/Sao_Paulo"; 
-        String usuario = "root";  
-        String senha = ""; 
-		Connection result = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			result = DriverManager.getConnection(url, usuario, senha);
-			return result;                        
-        }  
-        catch(Exception e){  
-			JOptionPane.showMessageDialog(null, e, "ERRO", JOptionPane.ERROR_MESSAGE);  
-        }
-		return result;
-	}
-
-
-    public void executeSQL(String sql) {
-        try {
-            statement = getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            resultset = statement.executeQuery(sql);
-        } catch (SQLException sqlex) {
-            System.out.println("Não foi possivel executar o comando: \n" + sqlex + "\n o sql passado foi: \n" + sql);
-        }
+    public Statement statement;
+    public ResultSet resultset;
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost:3306/bd_relatorios";
+    private static final String USER = "root";
+    private static final String PASS = "";
+    
+    public static Connection getConnection(){
+    try{
+        Class.forName(DRIVER);
+        return DriverManager.getConnection(URL,USER,PASS);
+    }catch (ClassNotFoundException | SQLException ex){
+        throw new RuntimeException("Error na conexão:" ,ex);
     }
+    }
+   /* public Connection getConnection() {
+        String url = "jdbc:mysql://localhost:3306/bd_relatorios" + "?verifyServerCertificate=false&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=America/Sao_Paulo";
+        String usuario = "root";
+        String senha = "";
+        Connection result = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            result = DriverManager.getConnection(url, usuario, senha);
+        } catch (ClassNotFoundException exc) {
+            System.out.println("Erro no driver, ClassNotFoundException " + exc.getMessage());
+        } catch (SQLException exc) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar no Banco de Dados! \n" + exc.getMessage(), "Erro ao Conectar no Banco de Dados", JOptionPane.ERROR_MESSAGE);
+        }
+        return result;
+    }*/
+
 }

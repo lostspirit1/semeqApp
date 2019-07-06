@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.modificarRequisicaoC">
+    <Label fx:id="lbID" layoutX="154.0" layoutY="65.0" text="Label" />
+    <Label layoutX="154.0" layoutY="104.0" text="nome" />
+    <JFXTextField fx:id="txtNome" layoutX="201.0" layoutY="100.0" />
+    <JFXButton fx:id="atualizar" layoutX="223.0" layoutY="155.0" onAction="#xd" text="trocar" />
+</AnchorPane>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="cadastro" prefHeight="507.0" prefWidth="739.0" style="-fx-background-color: #68c49d;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CadastroC">
+    <children>
+        <Label layoutX="146.0" layoutY="40.0" text="Login" />
+        <Label layoutX="145.0" layoutY="95.0" text="Senha" />
+        <Label layoutX="116.0" layoutY="165.0" text="Confirmar Senha" />
+        <JFXTextField fx:id="txtLogin" layoutX="232.0" layoutY="36.0" prefHeight="25.0" prefWidth="227.0" />
+        <JFXPasswordField fx:id="txtSenha" layoutX="237.0" layoutY="91.0" prefHeight="25.0" prefWidth="227.0" />
+        <JFXPasswordField fx:id="confirmSenha" layoutX="232.0" layoutY="153.0" prefHeight="25.0" prefWidth="227.0" />
+        <JFXButton layoutX="268.0" layoutY="408.0" onAction="#xd" prefHeight="25.0" prefWidth="156.0" text="Cadastrar" />
+        <JFXTextField fx:id="txtNome" layoutX="232.0" layoutY="205.0" prefHeight="25.0" prefWidth="227.0" />
+        <Label layoutX="145.0" layoutY="209.0" text="Nome" />
+        <JFXCheckBox fx:id="cADM" layoutX="187.0" layoutY="266.0" text="Administrador" />
+        <JFXCheckBox fx:id="cNormal" layoutX="334.0" layoutY="266.0" text="Normal" />
+        <JFXTextField fx:id="txtMatricula" layoutX="237.0" layoutY="300.0" prefHeight="25.0" prefWidth="227.0" />
+        <Label layoutX="113.0" layoutY="304.0" text="Numero Matricula" />
+        <Label layoutX="97.0" layoutY="351.0" text="Numero do Computador" />
+        <JFXTextField fx:id="txtComputador" layoutX="253.0" layoutY="343.0" prefHeight="25.0" prefWidth="227.0" />
+        <JFXCheckBox fx:id="cEsta" layoutX="442.0" layoutY="266.0" text="Estagiario" />
+
+    </children>
+</AnchorPane>

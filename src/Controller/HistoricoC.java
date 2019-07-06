@@ -1,129 +1,402 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+ 
 package Controller;
 
+import DAO.PecasDAO;
 import DAO.RequisicaoDAO;
+import Model.Alerts;
+import Model.Pecas;
 import Model.Requisicao;
-import Views.Historico;
-import Views.Principal;
+import Model.Servicos;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.control.TextArea;
+import javafx.util.Callback;
 
 
-/**
- * FXML Controller class
- *
- * @author SpiriT
- */
+
+ 
 public class HistoricoC implements Initializable {
-    @FXML private TableView<Requisicao> tb;
-    @FXML private TableColumn<Requisicao, Long> clmid;
-    @FXML private TableColumn<Requisicao, String> clmNome;
-    @FXML private JFXButton deletar;
-    @FXML private JFXButton btCancelar;
-    @FXML private JFXButton atualizar;
-    @FXML private JFXButton btBuscar;
-    @FXML private JFXTextField txPequisar;
+
+    @FXML
+    private TableColumn<Requisicao, Long> clmIdReq;
+
+    @FXML
+    private TableColumn<Requisicao, String> clmEquipamento;
+
+    @FXML
+    private TableColumn<Requisicao, String> clmSerial;
+
+    @FXML
+    private TableColumn<Requisicao, String> clmRequisitante;
+
+    @FXML
+    private TableColumn<Requisicao, String> clmObservacao;
+
+    @FXML
+    private TableColumn<Requisicao, String> clmStatus;
+
+    @FXML
+    private TableColumn<Requisicao, Timestamp> clmData;
+    
+    @FXML
+    private TableView<Requisicao> tb;
+    /*
+    @FXML
+    private TableColumn<Requisicao, Long> clmid;
+    @FXML
+    private TableColumn<Requisicao, String> clmNome;
+
+    @FXML
+    private TableColumn<Requisicao, String> clmIdNomeUser;
+    @FXML
+    private TableColumn<Requisicao, Timestamp> clmDate;
+    @FXML
+    private TableColumn<Requisicao, String> clmMotivo;
+    @FXML
+    private TableColumn<Requisicao, Boolean> clmStatus; */
+    @FXML
+    private JFXButton deletar;
+    @FXML
+    private JFXButton btCancelar;
+    @FXML
+    private JFXButton atualizar;
+    @FXML
+    private JFXButton btModificar;
+    @FXML
+    private JFXButton btBuscar;
+    @FXML
+    private JFXTextField txPequisar;
+    @FXML
+    private CheckBox checkGravador;
+    @FXML
+    private CheckBox checkBateria;
+    @FXML
+    private CheckBox checkMonitor;
+    @FXML
+    private CheckBox checkTeclado;
+    @FXML
+    private CheckBox checkMouse;
+    @FXML
+    private CheckBox checkVGA;
+    @FXML
+    private CheckBox checkPlacaMae;
+    @FXML
+    private CheckBox checkHD;
+    @FXML
+    private CheckBox checkFonte;
+    @FXML
+    private CheckBox checkRam;
+    @FXML
+    private CheckBox checkCabos;
+    @FXML
+    private CheckBox checkComponente;
+    @FXML
+    private CheckBox checkPeriferico;
+    @FXML
+    private CheckBox checkLimpezaF;
+    @FXML
+    private CheckBox checkLimpezaS;
+    @FXML
+    private CheckBox checkRoteador;
+    @FXML
+    private CheckBox checkBackup;
+    @FXML
+    private CheckBox checkFormatar;
+    @FXML
+    private CheckBox checkImpressoras;
+    @FXML
+    private TextArea txtMotivo;
     private Requisicao selecionada;
-    private ObservableList<Requisicao> requisicoes = FXCollections.observableArrayList();
-    
-    public void initTable(){
-        clmid.setCellValueFactory(new PropertyValueFactory("id"));
-        clmNome.setCellValueFactory(new PropertyValueFactory("nome"));
-        tb.setItems(atualizarTabela());
+    private CheckBox[] checkBoxes;
+    @FXML
+    void gerar(ActionEvent event) throws SQLException {
+        xd();
+        atualizarTabela();
     }
-       public ObservableList<Requisicao> atualizarTabela(){
-        RequisicaoDAO dao = new RequisicaoDAO();
-        requisicoes = FXCollections.observableArrayList(dao.getList());
-        return requisicoes;
-    }
-    public void fecha(){
-        Historico.getStage().close();
-    }
-    public void abreTelaP(){
-        Principal p = new Principal();
-        try {
-            p.start(new Stage());
-        } catch (Exception ex) {
-            Logger.getLogger(listagemUserC.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }   
-    
-    public void deletar(){
-        if(selecionada != null){
-        RequisicaoDAO dao = new RequisicaoDAO();
-        dao.delete(selecionada);
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-        a.setHeaderText("Usuario Deletado com Sucesso");
-        a.show();
-        tb.setItems(atualizarTabela());
-        }else{
-            Alert a = new Alert(Alert.AlertType.WARNING);
+
+    @FXML
+    private void deleteButton() throws SQLException {
+        if (selecionada != null) {
+            RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
+            requisicaoDAO.delete(selecionada);
+            Alert a = new Alert(AlertType.CONFIRMATION);
+            a.setHeaderText("Usuario Deletado com Sucesso");
+            a.show();
+            tb.setItems(atualizarTabela());
+        } else {
+            Alert a = new Alert(AlertType.WARNING);
             a.setHeaderText("Selecione um Usuario");
             a.show();
         }
     }
 
-    private ObservableList<Requisicao> buscar(){
-        ObservableList<Requisicao> requisicaopesquisa = FXCollections.observableArrayList();
-        for(int x = 0; x< requisicoes.size(); x++){
-            if(requisicoes.get(x).getNome().toLowerCase().contains(txPequisar.getText().toLowerCase())){
-                requisicaopesquisa.add(requisicoes.get(x));
-            }
-        }
-        return requisicaopesquisa;
-    }
-    
-    public void initialize(URL url, ResourceBundle rb) {
-       initTable(); 
-               btCancelar.setOnMouseClicked ((MouseEvent e)->{
-            abreTelaP();
-            fecha();
-        });
-               
-      atualizar.setOnMouseClicked ((MouseEvent e)->{
-           tb.setItems(atualizarTabela());
-        });
-        
-        deletar.setOnMouseClicked ((MouseEvent e)->{
-            deletar();
-        }); 
+    private ObservableList<Requisicao> requisicao = FXCollections.observableArrayList();
 
-        txPequisar.setOnKeyReleased((KeyEvent e)->{
-            tb.setItems(buscar());
-        });
-        
-        btBuscar.setOnMouseClicked ((MouseEvent e)->{
-            tb.setItems(buscar());
-        });        
-        
+    public void initialize(URL url, ResourceBundle rb) {
+        initTable();
         tb.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 selecionada = (Requisicao) newValue;
             }
-        });        
+        });
+
+      checkBoxes = new CheckBox[] {
+      checkMonitor,
+      checkTeclado,
+      checkMouse,
+      checkVGA,
+      checkPlacaMae,
+      checkHD,
+      checkFonte,
+      checkRam,
+      checkCabos,
+      checkGravador,
+      checkBateria
+        };  
+
+    }
+
+    public void initTable() {
+
+        clmIdReq.setCellValueFactory(new Callback<CellDataFeatures<Requisicao, Long>, ObservableValue<Long>>() {
+            public ObservableValue<Long> call(CellDataFeatures<Requisicao, Long> requisicao) {
+                return new SimpleObjectProperty(requisicao.getValue().getId());
+            }
+        });
+        clmEquipamento.setCellValueFactory(new Callback<CellDataFeatures<Requisicao, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(CellDataFeatures<Requisicao, String> requisicao) {
+                return new SimpleObjectProperty(requisicao.getValue().getReqEquipamento().getEquipamento_nome());
+            }
+        });
+        clmSerial.setCellValueFactory(new Callback<CellDataFeatures<Requisicao, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(CellDataFeatures<Requisicao, String> requisicao) {
+                return new SimpleObjectProperty(requisicao.getValue().getReqEquipamento().getSerial_equipamento());
+            }
+        });
+        clmRequisitante.setCellValueFactory(new Callback<CellDataFeatures<Requisicao, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(CellDataFeatures<Requisicao, String> requisicao) {
+                return new SimpleObjectProperty(requisicao.getValue().getReqUsuario().getNome());
+            }
+        });
+        clmObservacao.setCellValueFactory(new Callback<CellDataFeatures<Requisicao, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(CellDataFeatures<Requisicao, String> requisicao) {
+                return new SimpleObjectProperty(requisicao.getValue().getMotivo());
+            }
+        });
+        clmStatus.setCellValueFactory(new Callback<CellDataFeatures<Requisicao, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(CellDataFeatures<Requisicao, String> requisicao) {
+                return new SimpleObjectProperty(requisicao.getValue().getReqStatus().getCategoria());
+            }
+        });
+        clmData.setCellValueFactory(new Callback<CellDataFeatures<Requisicao, Timestamp>, ObservableValue<Timestamp>>() {
+            public ObservableValue<Timestamp> call(CellDataFeatures<Requisicao, Timestamp> requisicao) {
+                return new SimpleObjectProperty(requisicao.getValue().getData_criada());
+            }
+        });
+        tb.setItems(atualizarTabela());
+
+    }
+    //metodo novo
+    public void xd(){
+        List<Integer> pecasList = new ArrayList<>();
+        for (int i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].isSelected()) {
+                pecasList.add(i+1);
+            }
+        }
+    }
+    
+    
+    //metodo antigo
+/*
+    public void xd() throws SQLException {
+// SERVIÇOS LIST
+
+        List<Servicos> servicosList = new ArrayList<>();
+        {
+            if (checkComponente.isSelected()) {
+                Servicos s = new Servicos();
+                s.setId_Servicos(1L);
+                servicosList.add(s);
+            }
+            if (checkPeriferico.isSelected()) {
+                Servicos s = new Servicos();
+                s.setId_Servicos(2L);
+                servicosList.add(s);
+            }
+            if (checkLimpezaF.isSelected()) {
+                Servicos s = new Servicos();
+                s.setId_Servicos(3L);
+                servicosList.add(s);
+            }
+            if (checkLimpezaS.isSelected()) {
+                Servicos s = new Servicos();
+                s.setId_Servicos(4L);
+                servicosList.add(s);
+            }
+            if (checkRoteador.isSelected()) {
+                Servicos s = new Servicos();
+                s.setId_Servicos(5L);
+                servicosList.add(s);
+            }
+            if (checkBackup.isSelected()) {
+                Servicos s = new Servicos();
+                s.setId_Servicos(6L);
+                servicosList.add(s);
+            }
+            if (checkFormatar.isSelected()) {
+                Servicos s = new Servicos();
+                s.setId_Servicos(7L);
+                servicosList.add(s);
+            }
+            if (checkImpressoras.isSelected()) {
+                Servicos s = new Servicos();
+                s.setId_Servicos(8L);
+                servicosList.add(s);
+            }
+        }
+
+        List<Pecas> pecasList = new ArrayList<>();
+        {
+            if (checkMonitor.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(1);
+                pecasList.add(p);
+            }
+            if (checkTeclado.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(2);
+                pecasList.add(p);
+            }
+            if (checkMouse.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(3);
+                pecasList.add(p);
+            }
+            if (checkVGA.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(4);
+                pecasList.add(p);
+            }
+            if (checkPlacaMae.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(5);
+                pecasList.add(p);
+            }
+            if (checkHD.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(6);
+                pecasList.add(p);
+            }
+            if (checkFonte.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(7);
+                pecasList.add(p);
+            }
+            if (checkRam.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(8);
+                pecasList.add(p);
+            }
+            if (checkCabos.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(9);
+                pecasList.add(p);
+            }
+            if (checkGravador.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(10);
+                pecasList.add(p);
+            }
+            if (checkBateria.isSelected()) {
+                Pecas p = new Pecas();
+                p.setIdpecas(11);
+                pecasList.add(p);
+            }
+        }
+// Peças LIST
+        Alerts alerts = new Alerts();
+        String motivo = txtMotivo.getText();
+        RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
+        PecasDAO pecasDAO = new PecasDAO();
         
-    }    
+        List<Pecas> pecasList2 = new ArrayList<>();{
+        for (Pecas pecasVerificacao : pecasList) {
+                    pecasVerificacao.getIdpecas();
+                for (Pecas pecasBanco : pecasDAO.pegarPecas()) {
+                if(pecasBanco.getIdpecas() == pecasVerificacao.getIdpecas()){
+                    pecasVerificacao.setQtd_Pecas(pecasBanco.getQtd_Pecas());
+                    pecasVerificacao.getIdpecas();
+                    pecasList2.add(pecasVerificacao);
+                }
+        }
+        } 
+        }
+        
+
+        if(checkMonitor.isSelected() || checkTeclado.isSelected()|| checkMouse.isSelected()|| checkVGA.isSelected()|| checkPlacaMae.isSelected()|| checkHD.isSelected()|| checkFonte.isSelected()|| checkRam.isSelected()|| checkCabos.isSelected() || checkGravador.isSelected() || checkBateria.isSelected()){
+            for (Pecas checarQtd : pecasList2){
+                checarQtd.getIdpecas();
+                checarQtd.getQtd_Pecas();
+                if(checarQtd.getIdpecas() < pecasList2.size() && checarQtd.getQtd_Pecas() > 0){
+                alerts.alertReqCadastrado();
+                }else{
+                 alerts.alertSenhaDif();;   
+                }
+            }
+        }
+       else{
+        if(selecionada!= null){
+            requisicaoDAO.verificarStatus(selecionada);
+        
+            if(selecionada.getReqStatus().getIdstatus() == 1){
+                if(requisicaoDAO.inserir(servicosList, selecionada, motivo, pecasList)){
+                atualizarTabela();
+                alerts.alertReqCadastrado();
+                } 
+                else{
+                alerts.alertReqNCadastrado();
+                }
+            }
+            else{
+                alerts.reqFechada();
+            }
+        
+        }else{
+            alerts.selecionarRequisicao();
+        }
+       } 
+    }*/
+
+    public ObservableList<Requisicao> atualizarTabela() {
+        RequisicaoDAO dao = new RequisicaoDAO();
+        requisicao = FXCollections.observableArrayList(dao.getList());
+        return requisicao;
+    }
+
     
 }

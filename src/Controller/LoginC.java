@@ -6,6 +6,7 @@
 package Controller;
 
 import DAO.UsuarioDAO;
+import Model.Alerts;
 import Model.Usuario;
 import java.net.URL;
 import java.util.List;
@@ -27,44 +28,57 @@ import Views.Principal;
  * @author SpiriT
  */
 public class LoginC implements Initializable {
-    
+
     @FXML
     private TextField jLogin;
     @FXML
     private PasswordField jSenha;
-    
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
 
     }
+
     @FXML
     private void validar(ActionEvent event) {
         valida2();
+
     }
-    
-    public void valida2(){
-    String Login = jLogin.getText(), Senha=jSenha.getText();
-    Usuario u = new Usuario(Login,Senha);
-    UsuarioDAO dao = new UsuarioDAO();
-    dao.validarSenha(u);
+
+    public void valida2() {
+        String Login = jLogin.getText(), Senha = jSenha.getText();
+        Usuario u = new Usuario(Login, Senha);
+        UsuarioDAO dao = new UsuarioDAO();
+        if (dao.validarSenha(u) == true) {
+            Principal principal = new Principal();
+            fecha();
+            try {
+                principal.start(new Stage());
+            } catch (Exception ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            Alerts a = new Alerts();
+            a.alertSenhaErrada();
+        }
     }
-    public void validaLogin(){
+
+    public void validaLogin() {
         UsuarioDAO dao = new UsuarioDAO();
         List<Usuario> usuarios = dao.getList();
-        
-        for(int x = 0; x< usuarios.size(); x++){
-            if(jLogin.getText().equals(usuarios.get(x).getLogin()) && jSenha.getText().equals(usuarios.get(x).getSenha())){
-                Principal pr = new Principal ();
+
+        for (int x = 0; x < usuarios.size(); x++) {
+            if (jLogin.getText().equals(usuarios.get(x).getLogin()) && jSenha.getText().equals(usuarios.get(x).getSenha())) {
+                Principal pr = new Principal();
                 x = usuarios.size();
                 fecha();
                 try {
-                    Usuario login = Usuario.getInstance();
                     pr.start(new Stage());
                 } catch (Exception ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else{
-                if(x == usuarios.size()-1){
+            } else {
+                if (x == usuarios.size() - 1) {
                     Alert al = new Alert(Alert.AlertType.ERROR);
                     al.setHeaderText("Login Invalido");
                     al.show();
@@ -72,16 +86,16 @@ public class LoginC implements Initializable {
             }
         }
     }
-    
-    public void fecha(){
+
+    public void fecha() {
         Login.getStage().close();
     }
-    
+
     @FXML
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }
